@@ -30,6 +30,7 @@ require_relative '../models/entry'
      end
    end
    
+   # Test 
    describe "#to_s" do
      it "prints an entry as a string" do
        entry = Entry.new('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
