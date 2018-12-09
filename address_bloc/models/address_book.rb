@@ -68,4 +68,17 @@ class AddressBook
      # #5
      return nil
    end
+   
+   # Create an iterative search to find a name
+   def iterative_search(name)
+     lower = 0
+     upper = @entries.length - 1
+     (lower..upper).each do |position|
+       if name == @entries[position].name
+         return @entries[position]
+         break
+       end
+     end
+     return nil
+    end
  end
