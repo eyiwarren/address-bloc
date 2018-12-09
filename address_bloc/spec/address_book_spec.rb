@@ -3,6 +3,7 @@ require_relative '../models/address_book'
  RSpec.describe AddressBook do
   
   let(:book) { AddressBook.new }
+  let(:book_2) { AddressBook.new }
   
    # #6
    def check_entry(entry, expected_name, expected_number, expected_email)
@@ -17,20 +18,17 @@ require_relative '../models/address_book'
      end
      
      it "initializes entries as an array" do
-       
-       expect(book.entries).to be_an(Array)
+     expect(book.entries).to be_an(Array)
      end
  
      it "initializes entries as empty" do
-       
-       expect(book.entries.size).to eq(0)
+     expect(book.entries.size).to eq(0)
      end
    end
    
     describe "#remove_entry" do
      it "removes only one entry, plus its sub-entries, from the address book" do
-      
-      book.add_entry('Joke Silver', '281.555.4545', 'jsilver@myemail.com')
+     book.add_entry('Joke Silver', '281.555.4545', 'jsilver@myemail.com')
       
       name = 'Ada Lovelace'
       phone_number = '010.012.1815'
@@ -38,46 +36,46 @@ require_relative '../models/address_book'
       book.add_entry(name, phone_number, email)
 
       expect(book.entries.size).to eq(2)
-
       book.remove_entry(name, phone_number, email)
-
       expect(book.entries.size).to eq(1)
-
       expect(book.entries.first.name).to eq('Joke Silver')
     end
   end
   
     describe "#add_entry" do
      it "adds only one entry to the address book" do
-       book = AddressBook.new
-       book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
- 
-       expect(book.entries.size).to eq(1)
+     book = AddressBook.new
+     
+     book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
+     expect(book.entries.size).to eq(1)
      end
      
      it "adds the correct information to entries" do
-       
-       book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
-       new_entry = book.entries[0]
- 
-       expect(new_entry.name).to eq('Ada Lovelace')
-       expect(new_entry.phone_number).to eq('010.012.1815')
-       expect(new_entry.email).to eq('augusta.king@lovelace.com')
+     book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
+     new_entry = book.entries[0]
+     
+     expect(new_entry.name).to eq('Ada Lovelace')
+     expect(new_entry.phone_number).to eq('010.012.1815')
+     expect(new_entry.email).to eq('augusta.king@lovelace.com')
      end
    end
    
    # Test that AddressBook's .import_from_csv() method is working as expected
-   describe "#import_from_csv" do
+    describe "#import_from_csv" do
      it "imports the correct number of entries" do
        # #3
        book.import_from_csv("entries.csv")
-       book_size = book.entries.size
+       book_2.import_from_csv("entries_2.csv")
+       book_size = book.entries.size + book_2.entries.size
  
        # Check the size of the entries in AddressBook
-       expect(book_size).to eq 5
+       expect(book_size).to eq 8
      end
+     
+     
       it "imports the 1st entry" do
        book.import_from_csv("entries.csv")
+       
        # Check the first entry
        entry_one = book.entries[0]
  
@@ -111,6 +109,27 @@ require_relative '../models/address_book'
        entry_five = book.entries[4]
        check_entry(entry_five, "Sussie", "555-555-2036", "sussie@blocmail.com")
      end
+     
+     it "imports the 6th entry" do
+       book.import_from_csv("entries_2.csv")
+       # Check the second entry of second file
+       entry_six = book.entries[0]
+       check_entry(entry_six, "Fiona", "281-555-7427", "fiona@myemail.com")
+     end
+
+     it "imports the 7th entry" do
+       book.import_from_csv("entries_2.csv")
+       # Check the third entry of second file
+       entry_seven = book.entries[1]
+       check_entry(entry_seven, "Jumi", "281-555-4578", "jumi@myemail.com")
+     end
+
+     it "imports the 8th entry" do
+       book.import_from_csv("entries_2.csv")
+       # Check the first entry of second file
+       entry_eight = book.entries[2]
+       check_entry(entry_eight, "Lexi", "832-555-3345", "lexi@myemail.com")
+      end
    end
  
  end
