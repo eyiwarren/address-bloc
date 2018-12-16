@@ -16,7 +16,8 @@
      puts "3 - Search for an entry"
      puts "4 - View entry"
      puts "5 - Import entries from a CSV"
-     puts "6 - Exit"
+     puts "6 - Demolish all entries"
+     puts "7 - Exit"
      print "Enter your selection: "
 
      # #3
@@ -46,6 +47,10 @@
          read_csv
          main_menu
        when 6
+         system "clear"
+         demolish_entries
+         main_menu
+       when 7
          puts "Good-bye!"
          # #8
          exit(0)
@@ -55,6 +60,13 @@
          puts "Sorry, that is not a valid input"
          main_menu
      end
+   end
+
+
+   def demolish_entries
+     @address_book.entries.clear
+     system "clear"
+     main_menu
    end
 
    # #10
@@ -230,4 +242,3 @@
          search_submenu(entry)
      end
    end
- 
